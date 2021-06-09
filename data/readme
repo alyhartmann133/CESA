@@ -1,0 +1,11 @@
+#two scripts CESA.sh and process_CESA
+#CESA.sh - loop to filter CESA genes based on chromosome location, position number and pairing score
+#process_CESA - processes data to list by family, genus, species with scores aligning to ID's
+
+
+#CESA.sh - run after completing ALL desired intersect scripts
+	# - run on default settings
+
+#process_CESA - run after completing CESA.sh 
+	# - follow specific instructions within script
+	# - run on default settings

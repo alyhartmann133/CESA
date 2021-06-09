@@ -1,0 +1,39 @@
+#!/usr/bin/env Rscript
+
+#Note: prior to running this script you must run the following from the folder containing the gff
+#grep -v '^##' Physcomitrium_patens_CESA.gff > Physcomitrium_patens_CESA_locs.txt
+
+#run as Rscript process_CESA.R [inputfile] [reference locs file] [output file]
+
+library(tidyverse)
+if(!require("fuzzyjoin")){
+  install.packages("fuzzyjoin")
+}
+library(fuzzyjoin)
+
+args = commandArgs(trailingOnly=TRUE)
+
+if (length(args)==0) {
+  stop("You must supply (1) the path to the input file, (2) the path to the reference locs file, (3) an output file", call.=FALSE)
+}
+
+CESA <- read_delim(args[1], ' ', col_names = FALSE)
+colnames(CESA) <- c('seq', 'chr', 'pos', 'qual', 'spp')
+CESA <- filter(CESA, qual >10)
+
+gff <- read_tsv(args[2], col_names = FALSE) %>% 
+  select(-c(2,3,6,7,8)) 
+colnames(gff) <- c('chr','start','end','name')
+gff <- separate(gff, name, c("name1"), ";")
+
+CESA2 <- fuzzy_left_join(CESA,gff, by = c("chr" = "chr", "pos" = "start", "pos" = "end"),
+                         match_fun = list(`==`, `>=`, `<=`))
+CESA2 <-select(CESA2,-chr.y, -start, -end, -seq)
+
+CESA_genes <- group_by(CESA2, spp, name1) %>% 
+  summarize(n()) %>% 
+  pivot_wider(names_from = "name1", values_from = 'n()') %>%
+  select(-'NA')
+
+write_csv(CESA_genes, args[3])
+
