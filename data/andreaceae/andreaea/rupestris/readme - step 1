@@ -1,0 +1,30 @@
+#Instructions for running the first step once sequence data is downloaded
+#data can be transcriptomic or genomic (mine was a mixture) 
+#all data should be downloaded from a source (ex. ENA) as fastq.gz files (ex. ERR2040877_1.fastq.gz) - mine were paired reads
+
+#Here are three scripts for trimming, aligning and intersecting under an example species (rupestris)
+#These are three loops to run all files in the directory with * (change by discretion) 
+#trim script focuses taking the downloaded fastq.gz files and adapter trimming the reads to output many files after filtration criteria using BBMap
+#align script takes reads from the trimmed fastq.gz and aligns them to the reference genome, using Bowtie2, outputting a .bam file
+#intersect script filters the bam file from the alignment process and filters for reads aligning to CESA gene locations identified from our GFF file (from CoGe)
+
+#Steps below:
+
+#trim.sh - adjust time as necessary
+	# - switch to correct email address
+	# - change "f in *_1.fastq.gz" to "f in *" desired file variable
+	# - leave rest as default
+	# - run with sbatch
+
+#align.sh - adjust time as necessary
+	# - switch to correct email address
+        # - change "f in *_Trim_1.fastq.gz" to "f in *" desired file variable
+        # - leave rest as default
+        # - run	with sbatch
+
+#intersect.sh - adjust time as necessary 
+	# - switch to correct email address
+        # - should not have to change variable since align.sh creates bam
+        # - leave rest as default
+        # - run with sbatch
+	
