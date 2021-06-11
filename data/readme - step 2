@@ -1,6 +1,8 @@
-#two scripts CESA.sh and process_CESA
+#This step comes after step 1 with three scripts
+#includes two scripts - CESA.sh and process_CESA
 #run these AFTER completing trim, align and intersect scripts (found in rupestris folder) - after data has been cleaned up
-#CESA.sh - loop to filter CESA genes based on chromosome location, position number and pairing score
+
+#CESA.sh - loop script designed to filter CESA genes based on chromosome location, position number and pairing score
 #process_CESA - processes data to list by family, genus, species with scores aligning to ID's
 
 
